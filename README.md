@@ -1,3 +1,4 @@
+/*this is SQL, not SAS*/
 /* import file */
 %LET location=/C:/; 
 %LET file= BioEduJob.xlsx       ; /*Enter the filename */
