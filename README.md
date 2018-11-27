@@ -120,7 +120,7 @@ month(DOB) as mm,
 day(DOB) as dd
 from Bio
 ;
- 
+THIS IS SQL
 proc sql;
 create table answer7b as 
 select 
