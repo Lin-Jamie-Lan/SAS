@@ -1,3 +1,4 @@
+/*this is SQL, not SAS*/
 /* import file */
 %LET location=/C:/; 
 %LET file= BioEduJob.xlsx       ; /*Enter the filename */
@@ -119,7 +120,7 @@ month(DOB) as mm,
 day(DOB) as dd
 from Bio
 ;
- 
+THIS IS SQL
 proc sql;
 create table answer7b as 
 select 
