@@ -419,10 +419,33 @@ select
 		bio, job;
 	
 	/*23. Create a pass-thru query and understand the logic. What is the difference between pass0thru and other quries ? */
-	/*Gurdeep's codes*/
+	/*G's codes*/
 	
-	PROC SQL;
-	CONNECT TO SQLSVR as X(user
+/*32.Combine UN1 and UN2 using union and union all and see the difference.*/
+proc sql;
+create table answer32a as
+select 
+	*
+from 
+	UN1
+UNION
+select 
+	*
+from 
+	UN2; /*remove duplicate*/
+	
+proc sql;
+create table answer32b as 
+select 
+	*
+from UNI1
+UNION ALL
+select 
+	*
+from 
+	UN2; /*keep duplicate*/
+
+/*33. 
 
 
 
