@@ -286,4 +286,8 @@ select
   /*then I need to remove the first obs of each group*/
  run; 
  
+ /*16. Remove the vowel column from the table (using data set)*/
+ /*practice with removing DOB*/
+ 
+ 
  
