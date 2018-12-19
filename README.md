@@ -249,4 +249,41 @@ select
  data answer13; 
  set answer12a end=LastOne;
  retain holdName holdSalary; /*Create placeholder*/
+     if Salary>holdSalary then
+           do;
+               holdSalary=Salary;
+               holdName='First Name'n;
+           end;
+     if LastOne;
+ run;
+ 
+ /*use proc sql*/
+     proc sql;
+     create table answer13b as 
+     *
+     from answer12a
+     having salary=max(salary)
+     ;
+  
+  /*14.Add a row number to the dataset*/
+  data answer14;
+  rownum=_n_;
+  run;
+  
+  /*15. For all those people who have jobs, what was the % increase in their salary from their previous job (use both lead and lag)*/
+  proc sql;
+  create table answer15a as
+  select
+  *
+  from answer12a
+  where Salary is not missing 
+  order by ID, 'Start Date'n asc; 
+  
+  DATA answer15b;
+  set answer15a (drop=sex, height weight identification age);
+  Salary_lag=lag(Salary);
+  Increase_Percentage = (Salary - Salary_lag)/Salary_lag;
+  /*then I need to remove the first obs of each group*/
+ run; 
+ 
  
