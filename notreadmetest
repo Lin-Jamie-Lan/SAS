@@ -445,7 +445,74 @@ select
 from 
 	UN2; /*keep duplicate*/
 
-/*33. 
+/*33. Combine UN2 and UN3 using append */
+proc append base=UN2, data=UN3, force;
+run;
+/*append cannot create a new data set, append will happen in base set*/
+/*must use FORCE, because column Number has different data type */
+proc sql
+create table answer33 as
+select 
+	*
+from UN2
+;
+
+/*34 Use lead/lag/retain/dif function to calculate %changge in Sales year over year for 2 years of Sales data.
+(code in extra tab of practice file)*/
+Data answer34;
+set Sales;
+Sales_lag=lag(Sales);
+Change_Percentage=(Sales-Sales_lag)/Sales_lag;
+run;
+
+/*35. Create the above question (34) in Macro and do it for year 2014 and 2015.
+Make usre to save the result dataset using macro as well*/
+
+/*macro definition*/
+%MACRO SalesGet(yearX);
+proc sql;
+create table YearTest as 
+select Sales
+from Sales
+where Year=&yearX;
+&MEND;
+
+/*macro calling*/
+%SalesGet(2011);
+%SalesGet(2012);
+
+/*36. create variable a,b,c where a=1, b=2 and c=a+b */
+/*unresolved*/
+
+	%LET a=1;
+	%LET b=3;
+	%LET c=&a + &b /*value of a + value of b */
+	%put &c;
+	
+/*37. All those employees whose average salary is more than 300 (in one step)*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
