@@ -265,30 +265,167 @@ select
      having salary=max(salary)
      ;
   
-  /*14.Add a row number to the dataset*/
-  data answer14;
-  rownum=_n_;
-  run;
+/*14.Add a row number to the dataset*/
+data answer14;
+rownum=_n_;
+run;
   
-  /*15. For all those people who have jobs, what was the % increase in their salary from their previous job (use both lead and lag)*/
-  proc sql;
-  create table answer15a as
-  select
-  *
-  from answer12a
-  where Salary is not missing 
-  order by ID, 'Start Date'n asc; 
+/*15. For all those people who have jobs, what was the % increase in their salary from their previous job (use both lead and lag)*/
+proc sql;
+create table answer15a as
+select
+*
+from answer12a
+where Salary is not missing 
+order by ID, 'Start Date'n asc; 
   
-  DATA answer15b;
-  set answer15a (drop=sex, height weight identification age);
-  Salary_lag=lag(Salary);
-  Increase_Percentage = (Salary - Salary_lag)/Salary_lag;
-  /*then I need to remove the first obs of each group*/
- run; 
+DATA answer15b;
+set answer15a (drop=sex, height weight identification age);
+Salary_lag=lag(Salary);
+Increase_Percentage = (Salary - Salary_lag)/Salary_lag;
+/*then I need to remove the first obs of each group*/
+run; 
+
+/*16. Remove the vowel column from the table (using data set)*/
+/**practice with removing DOB**/
+DATA answer16;
+set answer15b (drop=DOB); 
+run;
  
- /*16. Remove the vowel column from the table (using data set)*/
- /**practice with removing DOB**/
+/*17. Select everyone with age between 20 and 30.*/
+/*proc sql step in aniswer12, using CASE*/
  
+DATA answer 17;
+set answer 12a; 
+If Age<20 or Age>30 then delete;
+run;
  
+/*18. Select everyone with 'a' as second letter in their first name*/
+proc sql;
+create tabkle answer18 as
+select
+*
+from Bio
+where 'First Name'n like '_a%'
+;
  
-**This text is _extremely_ important**
+/*19 select everyone which has 'ee' in their name.*/
+proc sql;
+create table answer19 as
+select 
+*
+from Bio
+where 'First Name'n like '%ee%'
+;
+ 
+/*20. Calculate total money earned by everyone so far*/
+/*month diff*/
+proc sql;
+create table answer20a as
+select 
+*,
+case
+					when 'End Date'n is null then Today()
+					else 'End Date'n 
+					End as 'End Date2'n format MMDDYY10. /*cannot reuse the columns, must create new column*/
+from answer12a
+where 'Start Date'n is not missing
+;
+					
+proc sql;
+create table answer20b as
+select 
+'First Name'n, Company, Salary, 'Start Date'n, 'End Date2'n, 
+intck('Day', 'Start Date'n, 'End Date2'n) as Duration
+from answer20a
+;
+
+proc sql;
+create table answer20c as
+select
+*,
+(Duration/365*Salary) as Saving
+from answer20b
+;
+
+proc sql;
+create table answer20d as 
+select
+*, 
+sum(Saving) as Sum
+from answer20c
+group by 'First Name'n
+;
+
+/*21. Create a new column, salary after bonus, where new salary will be 1.15 Salary. 
+Select only those people whose new salary is above 70000, dollar. All this should be done in the same step (Hint: Use calculated)*/
+proc sql;
+create table answer21 as 
+select
+*,
+(1.15* Salary) as SalaryAfterBonus
+from answer20b
+where calculated SalaryAfterBonus > 70000 /*Only after creating the column, I can reuse it, by putting "Calculated" */
+;
+
+/22. Do left, right inner, outer and cartesian join (between Bio-education and job) to see the difference in output. */
+proc sql;
+create table answer22a as
+select
+*
+from Bio a left join Education b
+on a.ID=b.'I.D.'n
+;
+
+proc sql;
+create table answer22b as 
+select 
+*
+from Bio a right join Job b
+on a.ID=b.Identification
+;
+
+proc sql;
+create table answer22c as
+select 
+*
+ from Bio a left join Job b
+	on a.ID=b.Identification
+	;
+	
+	proc sql;
+	create table answer22d as 
+	select 
+	*
+	from Bio a inner join 'Jobs 2'n b
+	on a.ID=b.Identification
+	;
+	
+	proc sql; 
+	create table answer 22e as
+	select
+	*
+	from Bio cross join Job /*what is thisssss???*/
+	;
+	
+	/*In a CARTESIAN JOIN there is  a join for each row of one table to every row of another table.
+	This usually happens when the matching column or WHERE condition is not specified. */
+	
+	proc sql;
+	create table answer 22f as 
+	select 
+		*
+	from 
+		bio, job;
+	
+	/*23. Create a pass-thru query and understand the logic. What is the difference between pass0thru and other quries ? */
+	/*Gurdeep's codes*/
+	
+	PROC SQL;
+	CONNECT TO SQLSVR as X(user
+
+
+
+
+
+ 
