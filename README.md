@@ -240,4 +240,13 @@ create table answer12b as
 select 
 'First Name'n, Age, Salary,
      Case 
-           when Age>=18 and Salary >=55000
+           when Age>=18 and Salary >=55000 then 'Y'
+           Else 'N'
+     End as Adult
+ from answer12a;
+ 
+ /*13. Whcih person has the Max salary (do not use the max function, use if-else and retain)*/
+ data answer13; 
+ set answer12a end=LastOne;
+ retain holdName holdSalary; /*Create placeholder*/
+ 
