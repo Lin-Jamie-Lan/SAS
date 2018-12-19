@@ -490,7 +490,43 @@ where Year=&yearX;
 	%put &c;
 	
 /*37. All those employees whose average salary is more than 300 (in one step)*/
+proc sql;
+create table answer37 as
+select
+*, avg(salary) avg
+from EMP
+group by employee
+having calcualted avg>280
+;
 
+/*28. Run a summary function */
+title1 'CLASS and a Summary Date Set';
+proc summary data=Bio;
+class sex;
+var heightl
+output out=clsummry n=ht_n mean=ht_mean std=ht_sd;
+run;
+
+/*29. Run a Simple Random function */
+
+proc surveyselect data=bio method=SRS rep=1
+	samplesize=3 seed=12345 out=sample;
+	id _all_;
+run;
+proc print data=sample noobs;
+run;
+
+/*30. Write a Proc means func*/
+PROC MEANS DATA=bio NOPRINT;
+Class sex;
+VAR height;
+OUTPUT OUT=means_data SUM=;
+RUN:
+
+/*31. Write a proc freq function*/
+proc FREQ data=bio;
+	TABLE sex height weight;
+run;
 
 
 
