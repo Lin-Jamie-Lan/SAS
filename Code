@@ -528,30 +528,3 @@ proc FREQ data=bio;
 	TABLE sex height weight;
 run;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
