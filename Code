@@ -1,4 +1,5 @@
-/*this is SQL, not SAS*/
+/*this is Proc SQL=*/
+
 /* import file */
 %LET location=/C:/; 
 %LET file= BioEduJob.xlsx       ; /*Enter the filename */
@@ -405,7 +406,7 @@ select
 	create table answer 22e as
 	select
 	*
-	from Bio cross join Job /*what is thisssss???*/
+	from Bio cross join Job 
 	;
 	
 	/*In a CARTESIAN JOIN there is  a join for each row of one table to every row of another table.
@@ -418,8 +419,7 @@ select
 	from 
 		bio, job;
 	
-	/*23. Create a pass-thru query and understand the logic. What is the difference between pass0thru and other quries ? */
-	/*G's codes*/
+
 	
 /*32.Combine UN1 and UN2 using union and union all and see the difference.*/
 proc sql;
